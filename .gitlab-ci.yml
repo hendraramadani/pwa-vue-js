@@ -1,12 +1,24 @@
 image: node:latest
 
-deploy_production:
-  stage: deploy
-  environment: Production
-  only:
-    - master
-  script:
-    - npm install -g firebase-tools
-    - yarn install
-    - yarn build
-    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
+  stages:
+    - build
+    - test
+
+  cache:
+    paths:
+      - node_modules/
+
+  install_dependencies:
+    stage: build
+    script:
+      - npm install -g firebase-tools
+      - npm install
+      - npm run build
+      - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
+    artifacts:
+      paths:
+        - node_modules/
+
+  testing_testing:
+    stage: test
+    script: npm test
