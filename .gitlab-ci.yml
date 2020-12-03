@@ -1,47 +1,12 @@
-image: node:10.15.3
+image: node:latest
 
-cache:
-  untracked: true
-  paths:
-    - node_modules/
-
-stages:
-  - setup
-  - test
-  - build
-  - deploy
-
-setup:
-  stage: setup
-  script:
-    - npm ci
-  only:
-    - master
-
-test:
-  stage: test
-  script:
-    - npm run test:unit
-  only:
-    - master
-
-build:
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    paths:
-      - dist
-  only:
-    - master
-
-deploy:
+deploy_production:
   stage: deploy
+  environment: Production
+  only:
+    - master
   script:
     - npm install -g firebase-tools
-    - firebase use --token $FIREBASE_TOKEN default
-    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_TOKEN
-  dependencies:
-    - build
-  only:
-    - master
+    - yarn install
+    - yarn build
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
