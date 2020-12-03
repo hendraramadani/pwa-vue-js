@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <input type="text" name="username" v-model="username"/> <br>
-    <button @click="getUserData"> Search </button>
+    <button @click="getUserData"> Cari Username Github </button>
 
     <div v-if="user !== null" class="profile">
       <img v-bind:src="user.avatar_url" width="200" height="200"> <br>
