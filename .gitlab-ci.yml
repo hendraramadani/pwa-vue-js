@@ -8,13 +8,6 @@ build:
     paths: 
     - dist/
 
-unit test:
-  stage: test
-  image: node:13.7.0
-  script:
-    - npm install --progress=false
-    - npm run unit
-  
 deploy: 
   stage: deploy
   image: "ruby:2.5"
