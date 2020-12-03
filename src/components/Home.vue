@@ -30,7 +30,7 @@
     name: 'hello',
     data () {
       return {
-        msg: 'VueJS PWA consuming Github API',
+        msg: 'Vue PWA + Github API',
         username: '',
         user: null
       }
