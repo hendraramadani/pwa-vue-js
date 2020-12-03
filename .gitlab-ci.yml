@@ -1,15 +1,21 @@
-image: node:alpine
+image: node:8.11
 cache:
   paths:
-  - node_modules/
-
-deploy_production:
+    - node_modules/
+    #- app/bower_components
+deploy_develop:
   stage: deploy
-  environment: Production
-    only:
-      - master
-    script:
-      - npm install
-      - npm i -g firebase-tools
-      - npm run build
-      - firebase deploy --non-interactive --token "1//0gEDqxnJxfPQ6CgYIARAAGBASNwF-L9IrNFF16hvj0t_rNEXT6i1rs9NIpaGkVnrtpJBHImhglgHr-qIoLBsmLmRgIgwyj42iT8M"  
+  environment: develop
+  only:
+    - develop
+  script:
+    - npm install -g firebase-tools
+    #- npm install -g bower
+    - npm install
+    - cd functions
+    - npm install 
+    - cd ..
+    - npm run build
+    #- bower install --allow-root
+    - firebase use --token $FIREBASE_TOKEN default
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_TOKEN
