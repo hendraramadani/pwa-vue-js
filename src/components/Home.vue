@@ -7,8 +7,11 @@
     <div v-if="user !== null" class="profile">
       <img v-bind:src="user.avatar_url" width="200" height="200"> <br>
       <label>Username : {{ user.login }}</label> <br>
+      <label>Id : {{ user.id }}</label> <br>
       <label>Profile name : {{ user.name }}</label> <br>
-      <label>Profile bio : {{ user.bio }}</label>
+      <label>Profile bio : {{ user.bio }}</label> <br>
+      <label>Puclic Repository : {{ user.public_repos }}</label> <br>
+      <label>Profile URL : {{ user.url }}</label>
     </div>
       <info-card
       id="info-card"
